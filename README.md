@@ -12,7 +12,7 @@ Experimenting with WebDriver automation in Rust
 * User WebDriver with URL http://localhost:4444
 
 ```terminal
-$ cargo run
+$ cargo run -- --cookies cookies.txt
 ```
 
 Internet Explorer also had a driver, there's something for Servo. All classic, not BiDi.
