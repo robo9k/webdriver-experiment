@@ -6,11 +6,7 @@ edition = "2024"
 [dependencies]
 anyhow = "1"
 clap = { version = "4", features = ["derive"] }
-cookiestxt-rs = { version = "0.1.2", features = ["thirtyfour"] }
+cookiestxt-rs = "0.1"
 thirtyfour = "0.37"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 url = "2"
-
-[patch.crates-io]
-# needs patching for major thirtyfour version
-cookiestxt-rs = { path = "../cookietxt-rs/" }

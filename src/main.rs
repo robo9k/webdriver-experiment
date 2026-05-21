@@ -41,7 +41,17 @@ async fn main() -> anyhow::Result<()> {
 
     driver.goto("https://en.wikipedia.org").await?;
     for c in cookies {
-        driver.add_cookie(c.into()).await?
+        let cookie = thirtyfour::Cookie {
+            name: c.name,
+            value: c.value,
+            path: Some(c.path),
+            domain: Some(c.domain),
+            secure: Some(c.https_only),
+            http_only: Some(c.http_only),
+            expiry: Some(c.expires as i64),
+            same_site: None, // FIXME: c.include_subdomains ?
+        };
+        driver.add_cookie(cookie).await?
     }
 
     // Navigate to https://en.wikipedia.org.
