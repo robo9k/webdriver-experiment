@@ -1,9 +1,21 @@
+use clap::Parser;
+use clap::ValueHint;
 use thirtyfour::prelude::*;
+use url::Url;
+
+#[derive(Debug, Parser)]
+struct Args {
+    #[arg(short, long, value_name = "URL", value_hint = ValueHint::Url, default_value = "http://localhost:4444")]
+    webdriver_server: Url,
+}
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    let args = Args::parse();
+
     let caps = DesiredCapabilities::firefox();
-    let driver = WebDriver::new("http://localhost:4444", caps).await?;
+    let server_url = args.webdriver_server;
+    let driver = WebDriver::new(server_url, caps).await?;
 
     // Navigate to https://wikipedia.org.
     driver.goto("https://wikipedia.org").await?;
@@ -25,4 +37,15 @@ async fn main() -> anyhow::Result<()> {
     driver.quit().await?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn verify_cli() {
+        use clap::CommandFactory;
+        Args::command().debug_assert();
+    }
 }

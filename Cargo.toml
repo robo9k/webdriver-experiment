@@ -8,3 +8,4 @@ anyhow = "1"
 clap = { version = "4", features = ["derive"] }
 thirtyfour = "0.36"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+url = "2.5.8"
